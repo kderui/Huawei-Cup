@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)https://towardsdatascience.com/media/64aa77e0da6e9970c98b6ae3be53de0c -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>pso.py – Medium</title><meta name="description" content="Instantly share code, notes, and snippets. You can&#39;t perform that action at this time. You signed in with another tab or window. You signed out in another tab or window. Reload to refresh your session. Reload to refresh your session."><meta name="twitter:widgets:csp" content="on"><meta name="robots" content="noindex"><!--<base target="_blank">--><base href="." target="_blank"><style>body {text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: "ff-tisa-web-pro", Georgia, Cambria, "Times New Roman", Times, serif; font-weight: 400; color: #333332; font-size: 18px; line-height: 1.4; margin: 0; background-color: white; overflow: hidden;}iframe {max-width: 100%;}</style></head><body><style>.gist .gist-file { margin-bottom: 0 !important; }.gist { text-rendering: auto; }</style><script src="./22b33d8b681a340976856c1b0cb085e4.js.下载" charset="utf-8"></script><link rel="stylesheet" href="./gist-embed-f4c129808d1ba845285e410431c00f6d.css"><div id="gist107034494" class="gist">
+    <div class="gist-file" translate="no">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-pso-py" class="file my-2">
+    
+  <div itemprop="text" class="Box-body p-0 blob-wrapper data type-python  ">
+
+      
+<table class="highlight tab-size js-file-line-container" data-tab-size="8" data-paste-markdown-skip="">
+      <tbody><tr>
+        <td id="file-pso-py-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-pso-py-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-k">import</span> <span class="pl-s1">sys</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-pso-py-LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-k">import</span> <span class="pl-s1">numpy</span> <span class="pl-k">as</span> <span class="pl-s1">np</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-pso-py-LC3" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-pso-py-LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-k">class</span> <span class="pl-v">PSO</span>:</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-pso-py-LC5" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-pso-py-LC6" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">def</span> <span class="pl-en">__init__</span>(<span class="pl-s1">self</span>, <span class="pl-s1">particles</span>, <span class="pl-s1">velocities</span>, <span class="pl-s1">fitness_function</span>,</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-pso-py-LC7" class="blob-code blob-code-inner js-file-line">                 <span class="pl-s1">w</span><span class="pl-c1">=</span><span class="pl-c1">0.8</span>, <span class="pl-s1">c_1</span><span class="pl-c1">=</span><span class="pl-c1">1</span>, <span class="pl-s1">c_2</span><span class="pl-c1">=</span><span class="pl-c1">1</span>, <span class="pl-s1">max_iter</span><span class="pl-c1">=</span><span class="pl-c1">100</span>, <span class="pl-s1">auto_coef</span><span class="pl-c1">=</span><span class="pl-c1">True</span>):</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-pso-py-LC8" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">particles</span> <span class="pl-c1">=</span> <span class="pl-s1">particles</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-pso-py-LC9" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">velocities</span> <span class="pl-c1">=</span> <span class="pl-s1">velocities</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-pso-py-LC10" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">fitness_function</span> <span class="pl-c1">=</span> <span class="pl-s1">fitness_function</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-pso-py-LC11" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-pso-py-LC12" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-v">N</span> <span class="pl-c1">=</span> <span class="pl-en">len</span>(<span class="pl-s1">self</span>.<span class="pl-s1">particles</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-pso-py-LC13" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">w</span> <span class="pl-c1">=</span> <span class="pl-s1">w</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-pso-py-LC14" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">c_1</span> <span class="pl-c1">=</span> <span class="pl-s1">c_1</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-pso-py-LC15" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">c_2</span> <span class="pl-c1">=</span> <span class="pl-s1">c_2</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-pso-py-LC16" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">auto_coef</span> <span class="pl-c1">=</span> <span class="pl-s1">auto_coef</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-pso-py-LC17" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">max_iter</span> <span class="pl-c1">=</span> <span class="pl-s1">max_iter</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-pso-py-LC18" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-pso-py-LC19" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-pso-py-LC20" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">p_bests</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-s1">particles</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="file-pso-py-LC21" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">p_bests_values</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-en">fitness_function</span>(<span class="pl-s1">self</span>.<span class="pl-s1">particles</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L22" class="blob-num js-line-number" data-line-number="22"></td>
+        <td id="file-pso-py-LC22" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">g_best</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-s1">p_bests</span>[<span class="pl-c1">0</span>]</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L23" class="blob-num js-line-number" data-line-number="23"></td>
+        <td id="file-pso-py-LC23" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">g_best_value</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-s1">p_bests_values</span>[<span class="pl-c1">0</span>]</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L24" class="blob-num js-line-number" data-line-number="24"></td>
+        <td id="file-pso-py-LC24" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-en">update_bests</span>()</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L25" class="blob-num js-line-number" data-line-number="25"></td>
+        <td id="file-pso-py-LC25" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L26" class="blob-num js-line-number" data-line-number="26"></td>
+        <td id="file-pso-py-LC26" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">iter</span> <span class="pl-c1">=</span> <span class="pl-c1">0</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L27" class="blob-num js-line-number" data-line-number="27"></td>
+        <td id="file-pso-py-LC27" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">is_running</span> <span class="pl-c1">=</span> <span class="pl-c1">True</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L28" class="blob-num js-line-number" data-line-number="28"></td>
+        <td id="file-pso-py-LC28" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-en">update_coef</span>()</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L29" class="blob-num js-line-number" data-line-number="29"></td>
+        <td id="file-pso-py-LC29" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L30" class="blob-num js-line-number" data-line-number="30"></td>
+        <td id="file-pso-py-LC30" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">def</span> <span class="pl-en">__str__</span>(<span class="pl-s1">self</span>):</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L31" class="blob-num js-line-number" data-line-number="31"></td>
+        <td id="file-pso-py-LC31" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">return</span> <span class="pl-s">f'[<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">self</span>.<span class="pl-s1">iter</span><span class="pl-kos">}</span></span>/<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">self</span>.<span class="pl-s1">max_iter</span><span class="pl-kos">}</span></span>] $w$:<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">self</span>.<span class="pl-s1">w</span>:.3f<span class="pl-kos">}</span></span> - $c_1$:<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">self</span>.<span class="pl-s1">c_1</span>:.3f<span class="pl-kos">}</span></span> - $c_2$:<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">self</span>.<span class="pl-s1">c_2</span>:.3f<span class="pl-kos">}</span></span>'</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L32" class="blob-num js-line-number" data-line-number="32"></td>
+        <td id="file-pso-py-LC32" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L33" class="blob-num js-line-number" data-line-number="33"></td>
+        <td id="file-pso-py-LC33" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">def</span> <span class="pl-en">next</span>(<span class="pl-s1">self</span>):</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L34" class="blob-num js-line-number" data-line-number="34"></td>
+        <td id="file-pso-py-LC34" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">if</span> <span class="pl-s1">self</span>.<span class="pl-s1">iter</span> <span class="pl-c1">&gt;</span> <span class="pl-c1">0</span>:</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L35" class="blob-num js-line-number" data-line-number="35"></td>
+        <td id="file-pso-py-LC35" class="blob-code blob-code-inner js-file-line">            <span class="pl-s1">self</span>.<span class="pl-en">move_particles</span>()</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L36" class="blob-num js-line-number" data-line-number="36"></td>
+        <td id="file-pso-py-LC36" class="blob-code blob-code-inner js-file-line">            <span class="pl-s1">self</span>.<span class="pl-en">update_bests</span>()</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L37" class="blob-num js-line-number" data-line-number="37"></td>
+        <td id="file-pso-py-LC37" class="blob-code blob-code-inner js-file-line">            <span class="pl-s1">self</span>.<span class="pl-en">update_coef</span>()</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L38" class="blob-num js-line-number" data-line-number="38"></td>
+        <td id="file-pso-py-LC38" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L39" class="blob-num js-line-number" data-line-number="39"></td>
+        <td id="file-pso-py-LC39" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">iter</span> <span class="pl-c1">+=</span> <span class="pl-c1">1</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L40" class="blob-num js-line-number" data-line-number="40"></td>
+        <td id="file-pso-py-LC40" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">is_running</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-s1">is_running</span> <span class="pl-c1">and</span> <span class="pl-s1">self</span>.<span class="pl-s1">iter</span> <span class="pl-c1">&lt;</span> <span class="pl-s1">self</span>.<span class="pl-s1">max_iter</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L41" class="blob-num js-line-number" data-line-number="41"></td>
+        <td id="file-pso-py-LC41" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">return</span> <span class="pl-s1">self</span>.<span class="pl-s1">is_running</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L42" class="blob-num js-line-number" data-line-number="42"></td>
+        <td id="file-pso-py-LC42" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L43" class="blob-num js-line-number" data-line-number="43"></td>
+        <td id="file-pso-py-LC43" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">def</span> <span class="pl-en">update_coef</span>(<span class="pl-s1">self</span>):</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L44" class="blob-num js-line-number" data-line-number="44"></td>
+        <td id="file-pso-py-LC44" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">if</span> <span class="pl-s1">self</span>.<span class="pl-s1">auto_coef</span>:</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L45" class="blob-num js-line-number" data-line-number="45"></td>
+        <td id="file-pso-py-LC45" class="blob-code blob-code-inner js-file-line">            <span class="pl-s1">t</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-s1">iter</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L46" class="blob-num js-line-number" data-line-number="46"></td>
+        <td id="file-pso-py-LC46" class="blob-code blob-code-inner js-file-line">            <span class="pl-s1">n</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-s1">max_iter</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L47" class="blob-num js-line-number" data-line-number="47"></td>
+        <td id="file-pso-py-LC47" class="blob-code blob-code-inner js-file-line">            <span class="pl-s1">self</span>.<span class="pl-s1">w</span> <span class="pl-c1">=</span> (<span class="pl-c1">0.4</span><span class="pl-c1">/</span><span class="pl-s1">n</span><span class="pl-c1">**</span><span class="pl-c1">2</span>) <span class="pl-c1">*</span> (<span class="pl-s1">t</span> <span class="pl-c1">-</span> <span class="pl-s1">n</span>) <span class="pl-c1">**</span> <span class="pl-c1">2</span> <span class="pl-c1">+</span> <span class="pl-c1">0.4</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L48" class="blob-num js-line-number" data-line-number="48"></td>
+        <td id="file-pso-py-LC48" class="blob-code blob-code-inner js-file-line">            <span class="pl-s1">self</span>.<span class="pl-s1">c_1</span> <span class="pl-c1">=</span> <span class="pl-c1">-</span><span class="pl-c1">3</span> <span class="pl-c1">*</span> <span class="pl-s1">t</span> <span class="pl-c1">/</span> <span class="pl-s1">n</span> <span class="pl-c1">+</span> <span class="pl-c1">3.5</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L49" class="blob-num js-line-number" data-line-number="49"></td>
+        <td id="file-pso-py-LC49" class="blob-code blob-code-inner js-file-line">            <span class="pl-s1">self</span>.<span class="pl-s1">c_2</span> <span class="pl-c1">=</span>  <span class="pl-c1">3</span> <span class="pl-c1">*</span> <span class="pl-s1">t</span> <span class="pl-c1">/</span> <span class="pl-s1">n</span> <span class="pl-c1">+</span> <span class="pl-c1">0.5</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L50" class="blob-num js-line-number" data-line-number="50"></td>
+        <td id="file-pso-py-LC50" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L51" class="blob-num js-line-number" data-line-number="51"></td>
+        <td id="file-pso-py-LC51" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">def</span> <span class="pl-en">move_particles</span>(<span class="pl-s1">self</span>):</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L52" class="blob-num js-line-number" data-line-number="52"></td>
+        <td id="file-pso-py-LC52" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L53" class="blob-num js-line-number" data-line-number="53"></td>
+        <td id="file-pso-py-LC53" class="blob-code blob-code-inner js-file-line">        <span class="pl-c"># add inertia</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L54" class="blob-num js-line-number" data-line-number="54"></td>
+        <td id="file-pso-py-LC54" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">new_velocities</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-s1">w</span> <span class="pl-c1">*</span> <span class="pl-s1">self</span>.<span class="pl-s1">velocities</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L55" class="blob-num js-line-number" data-line-number="55"></td>
+        <td id="file-pso-py-LC55" class="blob-code blob-code-inner js-file-line">        <span class="pl-c"># add cognitive component</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L56" class="blob-num js-line-number" data-line-number="56"></td>
+        <td id="file-pso-py-LC56" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">r_1</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-s1">random</span>.<span class="pl-en">random</span>(<span class="pl-s1">self</span>.<span class="pl-v">N</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L57" class="blob-num js-line-number" data-line-number="57"></td>
+        <td id="file-pso-py-LC57" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">r_1</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-en">tile</span>(<span class="pl-s1">r_1</span>[:, <span class="pl-c1">None</span>], (<span class="pl-c1">1</span>, <span class="pl-c1">2</span>))</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L58" class="blob-num js-line-number" data-line-number="58"></td>
+        <td id="file-pso-py-LC58" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">new_velocities</span> <span class="pl-c1">+=</span> <span class="pl-s1">self</span>.<span class="pl-s1">c_1</span> <span class="pl-c1">*</span> <span class="pl-s1">r_1</span> <span class="pl-c1">*</span> (<span class="pl-s1">self</span>.<span class="pl-s1">p_bests</span> <span class="pl-c1">-</span> <span class="pl-s1">self</span>.<span class="pl-s1">particles</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L59" class="blob-num js-line-number" data-line-number="59"></td>
+        <td id="file-pso-py-LC59" class="blob-code blob-code-inner js-file-line">        <span class="pl-c"># add social component</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L60" class="blob-num js-line-number" data-line-number="60"></td>
+        <td id="file-pso-py-LC60" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">r_2</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-s1">random</span>.<span class="pl-en">random</span>(<span class="pl-s1">self</span>.<span class="pl-v">N</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L61" class="blob-num js-line-number" data-line-number="61"></td>
+        <td id="file-pso-py-LC61" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">r_2</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-en">tile</span>(<span class="pl-s1">r_2</span>[:, <span class="pl-c1">None</span>], (<span class="pl-c1">1</span>, <span class="pl-c1">2</span>))</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L62" class="blob-num js-line-number" data-line-number="62"></td>
+        <td id="file-pso-py-LC62" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">g_best</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-en">tile</span>(<span class="pl-s1">self</span>.<span class="pl-s1">g_best</span>[<span class="pl-c1">None</span>], (<span class="pl-s1">self</span>.<span class="pl-v">N</span>, <span class="pl-c1">1</span>))</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L63" class="blob-num js-line-number" data-line-number="63"></td>
+        <td id="file-pso-py-LC63" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">new_velocities</span> <span class="pl-c1">+=</span> <span class="pl-s1">self</span>.<span class="pl-s1">c_2</span> <span class="pl-c1">*</span> <span class="pl-s1">r_2</span> <span class="pl-c1">*</span> (<span class="pl-s1">g_best</span>  <span class="pl-c1">-</span> <span class="pl-s1">self</span>.<span class="pl-s1">particles</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L64" class="blob-num js-line-number" data-line-number="64"></td>
+        <td id="file-pso-py-LC64" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L65" class="blob-num js-line-number" data-line-number="65"></td>
+        <td id="file-pso-py-LC65" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">is_running</span> <span class="pl-c1">=</span> <span class="pl-s1">np</span>.<span class="pl-en">sum</span>(<span class="pl-s1">self</span>.<span class="pl-s1">velocities</span> <span class="pl-c1">-</span> <span class="pl-s1">new_velocities</span>) <span class="pl-c1">!=</span> <span class="pl-c1">0</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L66" class="blob-num js-line-number" data-line-number="66"></td>
+        <td id="file-pso-py-LC66" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L67" class="blob-num js-line-number" data-line-number="67"></td>
+        <td id="file-pso-py-LC67" class="blob-code blob-code-inner js-file-line">        <span class="pl-c"># update positions and velocities</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L68" class="blob-num js-line-number" data-line-number="68"></td>
+        <td id="file-pso-py-LC68" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">velocities</span> <span class="pl-c1">=</span> <span class="pl-s1">new_velocities</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L69" class="blob-num js-line-number" data-line-number="69"></td>
+        <td id="file-pso-py-LC69" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">self</span>.<span class="pl-s1">particles</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-s1">particles</span> <span class="pl-c1">+</span> <span class="pl-s1">new_velocities</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L70" class="blob-num js-line-number" data-line-number="70"></td>
+        <td id="file-pso-py-LC70" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L71" class="blob-num js-line-number" data-line-number="71"></td>
+        <td id="file-pso-py-LC71" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L72" class="blob-num js-line-number" data-line-number="72"></td>
+        <td id="file-pso-py-LC72" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">def</span> <span class="pl-en">update_bests</span>(<span class="pl-s1">self</span>):</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L73" class="blob-num js-line-number" data-line-number="73"></td>
+        <td id="file-pso-py-LC73" class="blob-code blob-code-inner js-file-line">        <span class="pl-s1">fits</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-en">fitness_function</span>(<span class="pl-s1">self</span>.<span class="pl-s1">particles</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L74" class="blob-num js-line-number" data-line-number="74"></td>
+        <td id="file-pso-py-LC74" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L75" class="blob-num js-line-number" data-line-number="75"></td>
+        <td id="file-pso-py-LC75" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-en">len</span>(<span class="pl-s1">self</span>.<span class="pl-s1">particles</span>)):</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L76" class="blob-num js-line-number" data-line-number="76"></td>
+        <td id="file-pso-py-LC76" class="blob-code blob-code-inner js-file-line">            <span class="pl-c"># update best personnal value (cognitive)</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L77" class="blob-num js-line-number" data-line-number="77"></td>
+        <td id="file-pso-py-LC77" class="blob-code blob-code-inner js-file-line">            <span class="pl-k">if</span> <span class="pl-s1">fits</span>[<span class="pl-s1">i</span>] <span class="pl-c1">&lt;</span> <span class="pl-s1">self</span>.<span class="pl-s1">p_bests_values</span>[<span class="pl-s1">i</span>]:</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L78" class="blob-num js-line-number" data-line-number="78"></td>
+        <td id="file-pso-py-LC78" class="blob-code blob-code-inner js-file-line">                <span class="pl-s1">self</span>.<span class="pl-s1">p_bests_values</span>[<span class="pl-s1">i</span>] <span class="pl-c1">=</span> <span class="pl-s1">fits</span>[<span class="pl-s1">i</span>]</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L79" class="blob-num js-line-number" data-line-number="79"></td>
+        <td id="file-pso-py-LC79" class="blob-code blob-code-inner js-file-line">                <span class="pl-s1">self</span>.<span class="pl-s1">p_bests</span>[<span class="pl-s1">i</span>] <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-s1">particles</span>[<span class="pl-s1">i</span>]</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L80" class="blob-num js-line-number" data-line-number="80"></td>
+        <td id="file-pso-py-LC80" class="blob-code blob-code-inner js-file-line">                <span class="pl-c"># update best global value (social)</span></td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L81" class="blob-num js-line-number" data-line-number="81"></td>
+        <td id="file-pso-py-LC81" class="blob-code blob-code-inner js-file-line">                <span class="pl-k">if</span> <span class="pl-s1">fits</span>[<span class="pl-s1">i</span>] <span class="pl-c1">&lt;</span> <span class="pl-s1">self</span>.<span class="pl-s1">g_best_value</span>:</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L82" class="blob-num js-line-number" data-line-number="82"></td>
+        <td id="file-pso-py-LC82" class="blob-code blob-code-inner js-file-line">                    <span class="pl-s1">self</span>.<span class="pl-s1">g_best_value</span> <span class="pl-c1">=</span> <span class="pl-s1">fits</span>[<span class="pl-s1">i</span>]</td>
+      </tr>
+      <tr>
+        <td id="file-pso-py-L83" class="blob-num js-line-number" data-line-number="83"></td>
+        <td id="file-pso-py-LC83" class="blob-code blob-code-inner js-file-line">                    <span class="pl-s1">self</span>.<span class="pl-s1">g_best</span> <span class="pl-c1">=</span> <span class="pl-s1">self</span>.<span class="pl-s1">particles</span>[<span class="pl-s1">i</span>]</td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/AxelThevenot/22b33d8b681a340976856c1b0cb085e4/raw/25f8575c6f9eab2ac11fe54e76d87fad103c8960/pso.py" style="float:right">view raw</a>
+        <a href="https://gist.github.com/AxelThevenot/22b33d8b681a340976856c1b0cb085e4#file-pso-py">pso.py</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+<script>var height = -1; var delayMs = 200; if (document) {document.domain = document.domain;}function notifyResize(height) {height = height ? height : document.documentElement.offsetHeight; var resized = false; if (window.donkey && donkey.resize) {donkey.resize(height);var elements = document.getElementsByClassName("gist-data"); for (var i = 0; i < elements.length; i++) {elements[i].style.overflow = "visible"}resized = true;}if (parent && parent._resizeIframe) {var obj = {iframe: window.frameElement, height: height}; parent._resizeIframe(obj); resized = true;}if (window.location && window.location.hash === "#amp=1" && window.parent && window.parent.postMessage) {window.parent.postMessage({sentinel: "amp", type: "embed-size", height: height}, "*");}if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.resize) {window.webkit.messageHandlers.resize.postMessage(height); resized = true;}return resized;}function maybeResize() {try {if (document.documentElement.offsetHeight != height && notifyResize()) {height = document.documentElement.offsetHeight;}delayMs = Math.min(delayMs * 2, 1000000); setTimeout(maybeResize, delayMs);} catch(error) {console.log('maybeResize error: ', error)}}maybeResize();</script></body></html>

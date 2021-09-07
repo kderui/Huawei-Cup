@@ -9,8 +9,9 @@
 \geometry{left=2.54cm,right=2.54cm,top=3.17cm,bottom=3.17cm}
 %插入图片宏包
 \usepackage{graphicx}
-%显示行号，超链接
-%\usepackage{lineno,hyperref}  
+\usepackage{float}
+%显示行号
+%\usepackage{lineno}  
 %数学公式宏包
 \usepackage{amsmath}
 \usepackage{amsthm}
@@ -28,26 +29,95 @@
 \usepackage{booktabs}
 %引用超链接
 \usepackage{hyperref} 
+\hypersetup{colorlinks=true, linkcolor=blue, filecolor=blue, urlcolor=blue, citecolor=red}
+%引用文献样式
+\usepackage[backend=biber,sorting=nty,style=apa6,natbib=true,hyperref=true]{biblatex}
+\addbibresource{智能算法.bib}
+
 
 %相关信息设置
-\title{数学建模学习Notes}
-\author{叶其楚}
-\author{丁岩钧}
+\title{智能算法}
 \author{孔德瑞}
 \date{\today}
 
 \newpage
 \begin{document}
 
-\newpage
-\section{主要的模型、算法和代码}
-\subsection{离散选择模型}
-出自2018C题（恐怖袭击）
+%标题页
+\maketitle
 
 \newpage
-\section{论文写作}
+\section{粒子群算法}
 
+粒子群算法是一种智能算法，最早由\textcite{RN5870}提出，其通过模拟鸟群觅食的行为寻找函数的最优解。具体来说，粒子群算法需要在函数定义域内某一具体范围内（通常依经验或问题具体情景确定）随机分配一定数量的“粒子”及其初速度，并允许“粒子”根据其自己经历的最优解信息和群体的最优解信息调整移动速度，从而接近并找到最优解。\\
+
+下面以生产者成本最小化问题为例进行说明：
+\begin{equation}\label{eqcmp}
+\begin{aligned}
+	\min_{\mathbf{x}} &\quad c(\mathbf{x})=\mathbf{w^T x}\\
+	&s.t. \quad f(\mathbf{x}) \geq q 
+\end{aligned}
+\end{equation}
+
+其中$\mathbf{x}_{n\times1}$代表各生产要素的投入量向量，$\mathbf{w}_{n\times1}$代表各要素的价格向量，$f(·)$代表生产函数，$q$代表目标产量。\\
+
+首先确定适应度函数为$F(\mathbf{x})=c(\mathbf{x})=\mathbf{w^T x}$。根据经验值确定不同要素的投入量的上下界，在此范围内生成符合约束的一定规模随机分布的粒子群，其中粒子n初始位置为$\mathbf{x}^n_0$，并为每个粒子赋予特定的速度使得其不断移动以趋近最优解。定义一期内的粒子n的移动速度为：
+\begin{equation}\label{eqvdef}
+    \mathbf{v}^n_{t}=\mathbf{x}^n_{t}-\mathbf{x}^n_{t-1}
+\end{equation}
+
+其中，初速度是$\mathbf{v}^n_{1}$是随机分布的，为了使得粒子群向最优解处移动，$t \geq 2$时我们依照下式确定各期速度：
+\begin{equation}\label{eqvcal}
+    \mathbf{v}^n_{t}=\omega^n\mathbf{v}^n_{t-1}+c^n_{1}r^n_{1,t}(\mathbf{x}^{best(n)}_{t-1}-\mathbf{x}^n_{t-1})+c^n_{2}r^n_{2,t}(\mathbf{x}^{globalbest}_{t-1}-\mathbf{x}^n_{t-1})
+\end{equation}
+
+其中$\omega^n\mathbf{v}^n_{t-1}$反映了本期粒子移动速度受上一期移动速度的影响，或者说受到“惯性”的影响，其存在能够使得粒子保持寻找全局最优的能力和充分利用本个体和群体信息能力的平衡；其中系数$\omega^n$代表了惯性权重，由外生给定。$c^n_{1}r^n_{1,t}(\mathbf{x}^{best(n)}_{t-1}-\mathbf{x}^n_{t-1})$代表粒子移动时能够利用其自身经过的所有点的信息，向着自己经历的最优点方向移动；$c^n_{2}r^n_{2,t}(\mathbf{x}^{globalbest}_{t-1}-\mathbf{x}^n_{t-1})$代表粒子移动时能够利用其群体经过的所有点的信息，向着群体经历的最优点方向移动。其中$c^n_{1}$和$c^n_{2}$分别代表n粒子对于自身信息和群体信息的利用程度，一般为外生给定；$r^n_{1,t}$和$r^n_{2,t}$分别代表n粒子在t期内受群体信息影响的程度，一般是随机数；$\mathbf{x}^{best(n)}_{t-1}$和$\mathbf{x}^{globalbest}_{t-1}$分别代表粒子n和所有粒子经历过的所有点中的最优点。\\
+
+这样，依据式\ref{eqvcal}就能确定各粒子在不同时期的移动速度，在根据式\ref{eqvdef}可知：
+\begin{equation}
+    \mathbf{x}^n_{t}=\mathbf{x}^n_{t-1}+\mathbf{v}^n_{t}
+\end{equation}
+所以便可以根据上一期粒子位置和本期粒子移动速度便可以确定本期粒子位置。通过确定合适的参数并迭代后，粒子群便能逐渐向最优解点收敛，因此我们便能得到最优点。\\
+
+（下面根据网上整理的，没看包的程序可能不对）\\
+
+由于生产者成本最小化问题是一个受约束的最优化问题，面对约束有两种可能的处理方式：\\
+
+一是在确定迭代粒子位置时对于其新位置判定其是否满足约束条件，若不满足则重新确定其移动速度并生成新位置；\\
+
+二是确定设定一个“惩罚项”将约束条件纳入目标函数，从而将问题转化为无约束的最优化问题。以成本最小化问题为例，我们需要设定惩罚项
+
+\begin{equation}
+    e=\max\{0,q-f(\mathbf{x})\}
+\end{equation}
+
+并设定目标函数$F(\mathbf{x},\delta)=c(\mathbf{x})+\delta e$，其中$\delta >0$，这样我们只需求解：
+
+\begin{equation}
+	\min_{\mathbf{x}} \quad F(\mathbf{x},\delta)=c(\mathbf{x})+\delta e=\mathbf{w^T x}+\delta \max\{0,q-f(\mathbf{x})\}
+\end{equation}
+
+此时求得的最优解一定也是原成本最小化问题的最优解。
+
+\section{遗传算法}
+
+遗传算法同样是一种智能算法，由John Holland提出，最早见于\textcite{RN5873}和\textcite{RN5874}。其模仿了生物进化过程中遗传变异过程，包括其中的基因重组和基因突变的过程，以及进化中优胜劣汰的过程。具体为：设定一定规模的生物种群，每个个体有不同的基因型并因此由不同的环境适应度，之后种群内的个体配对经过基因的突变和重组产生后代并进行迭代。其中在选择父代时我们需要根据其适应度进行选择，来达到“优胜劣汰”的效果。这样，通过选择和迭代的过程，种群向最适应度最高的方向进化，从而能够产生最优解；重组保证种群进化的稳定性，而突变则保证了种群的多样性，避免种群向局部最优进化。\\
+我们仍然以生产者成本最小化问题（式\ref{eqcmp}）为例进行说明。\\
+首先确定种群内各个体的基因型$\mathbf{x}$，其在经验范围内随机分布。为了便于基因重组和交换的操作，我们需要将向量$\mathbf{x}$中的各元素的取值以二进制表示并按顺序排列。由于我们面临的是最小化问题，所以我们规定各个体的的适应度$F(\mathbf{x})=-c(\mathbf{x})=-\mathbf{w^T x}$，并据此为各个体指定其被选择为父代的概率，保证适应度越高的个体被选择为父代的概率越大。之后依概率选择两个父代个体，并进行基因重组，即随机指定其解某一段对应位置进行交换；以及基因突变，即交换后个体每一位置上的点以某一（较小）的概率发生变化（由0变为1或由1变为0），从而产生两个子代个体，并遵循相同的方法直至产生与父代相同数量的子代个体。如此进行种群迭代，种群中个体便向着最优的方向进化。
+
+\section{差分进化算法}
+差分遗传算法是智能算法的一种，最早由\textcite{RN5878}基于遗传算法提出。其过程仍然模拟
+
+
+
+
+
+
+
+
+
+%参考文献
 \newpage
-\section{一些网课和其他辅助资料}
+\printbibliography[title=参考文献]
 
 \end{document}
