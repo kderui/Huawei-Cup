@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (MiKTeX 21.8) (preloaded format=xelatex 2021.8.25)  8 SEP 2021 00:46
+This is XeTeX, Version 3.141592653-2.6-0.999993 (MiKTeX 21.8) (preloaded format=xelatex 2021.8.25)  8 SEP 2021 13:01
 entering extended mode
 **./智能算法.tex
 (智能算法.tex
@@ -1006,36 +1006,86 @@ Underfull \hbox (badness 10000) in paragraph at lines 52--53
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 62--63
+Underfull \hbox (badness 10000) in paragraph at lines 60--62
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 74--75
+Underfull \hbox (badness 10000) in paragraph at lines 70--72
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 79--81
+Underfull \hbox (badness 10000) in paragraph at lines 76--78
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 82--83
+Underfull \hbox (badness 10000) in paragraph at lines 79--80
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 84--85
+Underfull \hbox (badness 10000) in paragraph at lines 81--82
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 86--87
+Underfull \hbox (badness 10000) in paragraph at lines 83--84
 
  []
 
-[3] [4] [5] (智能算法.aux)
+
+Underfull \hbox (badness 10000) in paragraph at lines 97--98
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 99--100
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 101--102
+
+ []
+
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 103--104
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--106
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 110--111
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 112--113
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 117--119
+
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 128--130
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 131--132
+
+ []
+
+[5] [6] (智能算法.aux)
 Package rerunfilecheck Info: File `智能算法.out' has not changed.
 (rerunfilecheck)             Checksum: 4F18F5D0D931BB439850DE8127ABE7FB;249.
 Package logreq Info: Writing requests to '智能算法.run.xml'.
@@ -1043,12 +1093,12 @@ Package logreq Info: Writing requests to '智能算法.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 22017 strings out of 411240
- 445454 string characters out of 2832326
- 1296432 words of memory out of 3000000
- 42214 multiletter control sequences out of 15000+600000
+ 22028 strings out of 411240
+ 446156 string characters out of 2832326
+ 1295432 words of memory out of 3000000
+ 42225 multiletter control sequences out of 15000+600000
  410190 words of font info for 72 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  90i,9n,97p,739b,5100s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on 智能算法.pdf (5 pages).
+Output written on 智能算法.pdf (6 pages).
