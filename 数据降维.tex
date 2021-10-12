@@ -1,0 +1,173 @@
+%声明文件类型并设置页面和字体大小
+\documentclass[a4paper]{article}
+%设置中文
+\usepackage[UTF8,space]{ctex}
+\usepackage{fontspec}
+%\setCJKmainfont{SimSun}[BoldFont=SimHei,ItalicFont=KaiTi]
+%设置页边距
+\usepackage{geometry} 
+\geometry{left=2.54cm,right=2.54cm,top=3.17cm,bottom=3.17cm}
+%插入图片宏包
+\usepackage{graphicx}
+\usepackage{float}
+%显示行号
+%\usepackage{lineno}  
+%数学公式宏包
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+%设置显示行号的步长值
+%\modulolinenumbers[5] 
+%设置行间距
+\linespread{1.5} 
+%设置两端对齐
+\usepackage{ragged2e}
+\renewcommand{\raggedright}{\leftskip=0pt \rightskip=0pt plus 0cm}
+%设置首行缩进
+\usepackage{indentfirst}
+\setlength{\parindent}{2em}  
+%表格的包
+\usepackage{booktabs}
+%引用超链接
+\usepackage{hyperref} 
+\hypersetup{colorlinks=true, linkcolor=blue, filecolor=blue, urlcolor=blue, citecolor=cyan}
+%\usepackage{cleveref}
+%引用文献样式
+\usepackage[backend=biber,sorting=nty,style=apa6,natbib=true,hyperref=true]{biblatex}
+\addbibresource{数据降维.bib}
+%改变章节编号
+%\usepackage{titlesec}
+
+%相关信息设置
+\title{数据降维和模型建立方法}
+\author{孔德瑞}
+\date{\today}
+
+\begin{document}
+
+%标题页
+\maketitle
+
+所谓的数据降维，也就是指采用某种特定的映射方法,将原高维空间中的数据点映射到低维度的空间中。通过数据降维，我们可以使得数据便于计算和可视化，同时降维可以提取数据内部的本质结构，减少冗余信息和噪声信息造成的误差，提高应用中的精度。因此，数据降维的关键在于寻找合适的映射方法，使得数据维度降低的同时，能最大程度的保有原数据的特征，同时减少冗余信息和噪声信息。
+
+\section{主成分分析PCA}
+
+主成分分析是一种常用的线性数据降维方法，最早由\textcite{RN6157}提出，并由\textcite{RN6158}拓展。主成分分析中以方差衡量数据的信息，因此主成分分析的目标是使得降维后样本的方差尽可能大以尽可能保留原数据的特征。\\
+
+定义数据集$\mathbf{X}=\{x_1,x_2,\ldots,x_K\}_{N\times K}$，其中K表示数据维度。若我们要将数据转换为L维数据，则记降维后的数据集$\mathbf{Y}=\mathbf{X}\mathbf{W}$，其中$\mathbf{W}_{K\times L}$代表线性转换矩阵。此时，降维后的数据方差最大的最优化问题为：
+
+\begin{align}
+\max_{\mathbf{W}}\quad var(\mathbf{Y})&=\frac{1}{n-1}tr(\mathbf{Y}^T \mathbf{Y})\\
+&=\frac{1}{n-1}tr(\mathbf{W}^T \mathbf{X}^T \mathbf{X} \mathbf{W})\\
+&=tr\bigg(\mathbf{W}^T \frac{1}{n-1} \mathbf{X}^T \mathbf{X} \mathbf{W}\bigg)\\
+&=tr\bigg(\mathbf{W}^T \Sigma \mathbf{W}\bigg)\\
+s.t. \quad \mathbf{w}_i^T \mathbf{w}_i &=1 \forall i \in \{ 1,2,\ldots,L \}
+\end{align}
+
+其中$\Sigma=\frac{1}{n-1} \mathbf{X}^T \mathbf{X}$代表原始数据集的协方差矩阵。解最优化问题，构造拉格朗日函数：
+\begin{equation}
+\mathcal{L}(\mathbf{W},\mathbf{\lambda})=tr\bigg(\mathbf{W}^T \Sigma\mathbf{W}\bigg)-\sum_{L}^{i=1}\lambda_i(w_i^T w_i-1)
+\end{equation}
+其一阶条件为：
+\begin{equation}
+\Sigma \mathbf{w}_i=\lambda_i\mathbf{w}_i
+\end{equation}
+则可知，$\mathbf{w}_i$和$\lambda_i$为$\Sigma$的特征向量及其对应的特征值。同时，因为$\Sigma\mathbf{w}_i=\lambda_i\mathbf{w}_i
+$，可知$tr\bigg(\mathbf{W}^T \Sigma \mathbf{W}\bigg)=\sum_{i=1}^{L}\lambda_i$，因此我们只需求$\Sigma$的特征值和特征向量，取其中最大的L个特征值及其对应的特征向量组成$\mathbf{W}$，即可得到最优化的解。
+
+\section{随机森林Random Forest}
+
+随机森林是通过集成学习的思想将多棵树集成的一种算法，由\textcite{RN6164}提出。它的基本单元是决策树，而它的本质属于机器学习的一大分支——集成学习（Ensemble Learning）方法。\\
+
+决策树是一个树结构（可以是二叉树或非二叉树），其每个非叶节点表示一个特征属性上的测试，每个分支代表这个特征属性在某个值域上的输出，而每个叶节点存放一个类别。使用决策树进行决策的过程就是从根节点开始，测试待分类项中相应的特征属性，并按照其值选择输出分支，直到到达叶子节点，将叶子节点存放的类别作为决策结果。\\
+
+随机森林，是用随机的方式建立一个森林，森林里面有很多的决策树组成，随机森林的每一棵决策树之间是没有关联的。在得到森林之后，当有一个新的输入样本进入的时候，就让森林中的每一棵决策树分别进行判断，将决策树中得出的结果中最多的结果作为最终的输出结果。\\
+
+随机森林的构造过程如下：
+
+\begin{enumerate}
+	\item 假如有N个样本，则有放回的随机选择N个样本(每次随机选择一个样本，然后返回继续选择)。这选择好了的N个样本用来训练一个决策树，作为决策树根节点处的样本。
+	\item 当每个样本有M个属性时，在决策树的每个节点需要分裂时，随机从这M个属性中选取出m个属性，满足条件$m<M$。然后从这m个属性中采用某种策略来选择一个属性作为该节点的分裂属性。
+	\item 决策树形成过程中每个节点都要按照步骤2来分裂，直至无法分裂为止。则易知，如果下一次该节点选出来的那一个属性是刚刚其父节点分裂时用过的属性，则该节点已经达到了叶子节点，无须继续分裂了。（与一般决策树算法相比，随机森林算法生成决策树并没有剪枝过程。）
+	\item 按照以上三个步骤建立大量的决策树，这样就能构成随机森林。
+\end{enumerate}
+
+由于我们要解决的是回归问题，因此生成的决策树选取为CART回归树。CART回归树预测回归连续型数据。CART假设决策树是二叉树，内部结点特征的取值只有“是”和“否”，左分支是取值为“是”的分支，有分支则相反。这样的决策树等价于递归地二分每个特征。。假设X与Y分别是输入和输出变量，并且Y是连续变量。一般CART回归树的生成过程如下：
+\begin{enumerate}
+\item 选择最优切分变量j与切分点s，即求解：
+\begin{equation}
+\min_{j,s}[\min_{c_1}\sum_{x_i \in R_1(j,s)}(y_i-c_1)^2]+\min_{c_1}\sum_{x_i \in R_2(j,s)}(y_i-c_2)^2] 
+\end{equation}
+其中$R_m$是被划分的输入空间，其对应的输出值为$c_m$。遍历变量j，对固定的切分变量j扫描切分点s，选择使上式取得最小值（平方误差最小）的(j,s)。
+\item 用选定的对(j,s)划分区域并决定相应的输出值：
+\begin{equation}
+R_1(j,s)=\{x|x^{(j)}\leq s\},\quad R_2(j,s)=\{x|x^{(j)} > s\}
+\end{equation}
+\begin{equation}
+\hat{c_{m}}=\frac{1}{N_m} \sum_{x_i \in R_m (j,s)} y_i, \quad x\in R_m,m=1,2
+\end{equation}
+\item 继续对两个子区域调用步骤1，直至满足停止条件
+\item 将输入空间划分为M个区域$R_1,R_2,\ldots,R_m$生成决策树：
+\begin{equation}
+f(x)=\sum_{m=1}^{M}\hat{c_{m}}I(x\in R)
+\end{equation}
+\item 当输入空间划分确定时，可以用平方误差$\sum_{x_i \in R_m}(y_i-f(x_i))^2$来表示回归树对于训练数据的预测方法，用平方误差最小的准则求解每个单元上的最优输出值。
+\end{enumerate}
+
+应用随机森林进行数据降维，或者说选取数据中更“重要”的特征，主要参考的是袋外错误率（out-of-bag error）和RF特征重要性。所谓袋外错误率即对于随机森林中某一棵树而言，没有参与其形成的样本（袋外样本oob）中预测错误的频率。袋外错误率是随机森林泛化误差的一个无偏估计。\\
+
+在计算袋外错误率后便可以计算RF特征重要性，其原理为：给某个特征随机的加入噪声后，如果袋外错误率增大，说明这个特征对样本分类的结果影响比较大，说明重要程度比较高。具体计算方法如下：对于某特征j，对于每一个决策树可计算其袋外错误率$oob error_0$，随机对特征j加入噪声干扰后可计算袋外错误率$oob error_1$，则对该特征：
+\begin{equation}
+\text{RF重要性}=\frac{\sum(oob error_1-oob error_0)}{\text{随机森林中决策树的个数}}
+\end{equation}
+
+\section{梯度提升决策树 Gradient Boosting Decision Tree}
+
+GBDT(Gradient Boosting Decision Tree) ,又叫 MART（Multiple Additive Regression Tree)，是一种迭代的决策树算法，该算法由多棵决策树组成，所有树的结论累加起来做最终答案。\\
+
+GBDT 算法可以看成是由K棵树组成的加法模型：
+\begin{equation}
+\hat{y_i}=\sum_{k=1}^{K}f_k(x_i),f_k\in F
+\end{equation}
+
+学习加法模型，可以用前向分布算法（Forward Stagewise Algorithm）。因为学习的是加法模型，如果能够从前往后，每一步只学习一个基函数及其系数（结构），逐步逼近优化目标函数，那么就可以简化复杂度。。具体地，我们从一个常量预测开始，每次学习一个新的函数，过程如下：
+\begin{align}
+	\hat{y_i^0}&=0\\
+	\hat{y_i^1}&=f_1(x_i)=\hat{y_i^0}+f_1(x_i)\\
+	\hat{y_i^1}&=f_2(x_i)=\hat{y_i^1}+f_2(x_i)\\
+	&\ldots\\
+	\hat{y_i^t}&=\sum_{k=1}^{t}=\hat{y_i^{t-1}}+f_t(x_i)
+\end{align}
+
+定义一个学习的目标函数为：
+\begin{equation}
+Obj(\Theta)=L(\Theta)+\Omega(\Theta)
+\end{equation}
+其中$L(\Theta)$是损失函数，用来衡量模型拟合训练数据的好坏程度；$\Omega(\Theta)$称之为正则项，用来衡量学习到的模型的复杂度。\\
+
+在第 t 步，这个时候目标函数可以写为：
+\begin{align}
+Obj^{(t)}&=\sum_{i=1}^{n} l(y_i,\hat{y_i^t})+\sum_{i=1}^{t}\Omega(f_i)\\
+&=\sum_{i=1}^{n} l(y_i,\hat{y_i^{t-1}}+f_t(x_i))+\Omega(f_t)+constant\\
+&=\sum_{i=1}^{n} [l(y_i,\hat{y_i^{t-1}})+g_i f_t(x_i)+\frac{1}{2}h_i f^2_t(x_i)]+\Omega(f_t)+constant\label{eqtaylor}
+\end{align}
+其中式\ref{eqtaylor}应用了泰勒公式的二阶展开式。由于函数中的常量在函数最小化的过程中不起作用，因此我们可以移除掉常量项，得：
+\begin{equation}\label{eqobj}
+Obj^{(t)}=\sum_{i=1}^{n} [g_i f_t(x_i)+\frac{1}{2}h_i f^2_t(x_i)]+\Omega(f_t)
+\end{equation}
+
+由于要学习的函数仅仅依赖于目标函数，从式\ref{eqobj}可以看出只需为学习任务定义好损失函数，并为每个训练样本计算出损失函数的一阶导数和二阶导数，通过在训练样本集上最小化式\ref{eqobj},即可求得每步要学习的函数 $f(x)$，从而根据加法模型可得最终要学习的模型。\\
+
+对于一颗生成好的决策树，假设其叶子节点个数为 T，该决策树是由所有叶子节点对应的值组成的向量 $w\in R^T$，以及一个把特征向量映射到叶子节点索引的函数 $q:Rd→1,2,\ldots,T$组成的。因此，决策树可以定义为：$ft(x)=w{q(x)}$。决策树的复杂度可以由正则项 $\Omega(ft)=\gamma T + \frac12 \lambda \sum{j=1}^T w_j^2$ 来定义，即决策树模型的复杂度由生成的树的叶子节点数量和叶子节点对应的值向量的L2范数决定。
+
+
+
+
+
+
+%参考文献
+\newpage
+\printbibliography[title=参考文献]
+
+\end{document}
